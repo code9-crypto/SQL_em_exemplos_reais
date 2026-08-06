@@ -1,0 +1,7 @@
+CRIANDO ÍNDICE PARA MELHORAR A TEMPO DE RESPOSTA DAS CONSULTAS
+
+CREATE INDEX idx_data ON tarefas(tf_data); -> indice coluna tf_data
+
+CREATE INDEX idx_destino ON tarefas(tf_destino); -> índice coluna tf_destino
+
+CREATE INDEX idx_solicitante ON tarefas(tf_solicitante); -> índice coluna tf_solicitante
