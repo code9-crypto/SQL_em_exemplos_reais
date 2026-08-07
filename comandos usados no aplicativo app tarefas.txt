@@ -1,3 +1,5 @@
+########COMANDO USADO NO CONSOLE DO MYSQL######################
+
 CRIANDO ÍNDICE PARA MELHORAR A TEMPO DE RESPOSTA DAS CONSULTAS
 
 CREATE INDEX idx_data ON tarefas(tf_data); -> indice coluna tf_data
@@ -5,3 +7,131 @@ CREATE INDEX idx_data ON tarefas(tf_data); -> indice coluna tf_data
 CREATE INDEX idx_destino ON tarefas(tf_destino); -> índice coluna tf_destino
 
 CREATE INDEX idx_solicitante ON tarefas(tf_solicitante); -> índice coluna tf_solicitante
+
+------------------------------------------------------------------------------------------
+CRIAÇÃO DE PROCEDURES PARA MELHORAR APLICAÇÃO NAS BUSCAS E INSERÇÕES
+
+//Esta PROCEDURE é para buscar as tarefas pelo nome do solicitante
+DELIMITER $$
+
+CREATE PROCEDURE recuperaTarefaPeloNome(
+    IN p_nome VARCHAR(100)
+)
+BEGIN
+
+    SELECT
+        tf_data,
+        tf_destino,
+        tf_solicitante,
+        tf_tarefa
+    FROM tarefas
+    WHERE tf_solicitante LIKE CONCAT('%', p_nome, '%');
+
+END $$
+
+DELIMITER ;
+
+-------------------------------------------------------------------
+//Esta procedure traz as regiões de 1 a 9
+
+delimiter $$
+
+create procedure recuperaRegioes()
+
+BEGIN
+	
+    SELECT
+    	DISTINCT(tf_destino)
+        	FROM tarefas
+        	WHERE tf_destino LIKE "%Região%";
+
+END $$
+
+DELIMITER ;
+
+----------------------------------------------------------------------
+//Este procedure busca pelas tarefas por meio da região
+DELIMITER $$
+
+create PROCEDURE recuperaTarefaPorRegiao(
+	in p_regiao varchar(50)
+)
+
+BEGIN
+	
+    select tf_data, tf_destino, tf_solicitante, tf_tarefa from tarefas
+    where tf_destino like concat("%", p_regiao, "%");
+
+END $$
+
+DELIMITER ;
+
+--------------------------------------------------------------------------
+//Esta procedure recupera as tarefas por meio da data
+DELIMITER $$
+
+CREATE PROCEDURE recuperaTarefaPorData(
+    IN p_data VARCHAR(100)
+)
+BEGIN
+
+    SELECT
+        tf_data,
+        tf_destino,
+        tf_solicitante,
+        tf_tarefa
+    FROM tarefas
+    WHERE tf_data = p_data
+
+END $$
+
+DELIMITER ;
+
+--------------------------------------------------------------------------
+//Esta procedure recupera uma única tarefa por meio do númro
+DELIMITER $$
+
+CREATE PROCEDURE recuperaTarefaPorData(
+    IN p_numero VARCHAR(100)
+)
+BEGIN
+
+    SELECT
+        tf_data,
+        tf_destino,
+        tf_solicitante,
+        tf_tarefa
+    FROM tarefas
+    WHERE tf_tarefa = p_numero
+
+END $$
+
+DELIMITER ;
+
+
+------------------------------------------------------------------------------
+//Esta procedure irá salvar os dados no banco
+delimiter $$
+
+create procedure gravaTarefa(
+	in p_tarefa varchar(10),
+    in p_solicitante varchar(150),
+    in p_destino varchar (50)
+)
+
+BEGIN
+	insert into tarefas(
+    	tf_tarefa,
+        tf_solicitante,
+        tf_destino
+    )
+    
+    VALUES (
+    	p_tarefa,
+        p_solicitante,
+        p_destino
+    );
+    
+END $$
+
+DELIMITER ;
