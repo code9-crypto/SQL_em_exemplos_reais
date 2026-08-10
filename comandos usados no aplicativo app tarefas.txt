@@ -88,10 +88,10 @@ END $$
 DELIMITER ;
 
 --------------------------------------------------------------------------
-//Esta procedure recupera uma única tarefa por meio do númro
+//Esta procedure recupera uma única tarefa por meio do número
 DELIMITER $$
 
-CREATE PROCEDURE recuperaTarefaPorData(
+CREATE PROCEDURE retornaTarefaPorNumero(
     IN p_numero VARCHAR(100)
 )
 BEGIN
