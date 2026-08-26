@@ -135,3 +135,50 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+
+----------------------------------------------------
+//Esta procedure vai fazer a busca pelo SSHD do solicitante por meio do seu nome
+DELIMITER $$
+
+create procedure buscaSSHD(
+
+    IN b_nome varchar(200)
+
+)
+BEGIN
+	select sshd_solicitante
+    FROM sshd_solicitantes
+    	WHERE b_nome = nome_solicitante
+        LIMIT 1;
+END
+
+DEMILITER ;
+
+
+-----------------------------------------------------
+//Esta procedure irá salvar o nome e o sshd do solicitante na tabela sshd_solicitantes
+
+
+DELIMITER $$
+
+create procedure salvaSSHD(
+
+    IN s_nome varchar(200),
+    IN s_sshd varchar(10)
+        
+)
+
+BEGIN
+	INSERT INTO sshd_solicitantes(
+        nome_solicitante,
+        sshd_solicitante
+    )
+    
+    VALUES(
+        s_nome,
+        s_sshd
+   	);
+END
+
+DELIMITER ;
