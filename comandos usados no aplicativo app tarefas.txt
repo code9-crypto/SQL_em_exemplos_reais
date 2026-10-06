@@ -43,7 +43,7 @@ BEGIN
     SELECT
     	DISTINCT(tf_destino)
         	FROM tarefas
-        	WHERE tf_destino LIKE "%Região%";
+        	WHERE tf_destino LIKE "%Região%" OR tf_destino = "evidencias";
 
 END $$
 
